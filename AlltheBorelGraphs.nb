@@ -1,0 +1,446 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     16844,        438]
+NotebookOptionsPosition[     15490,        401]
+NotebookOutlinePosition[     15845,        417]
+CellTagsIndexPosition[     15802,        414]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ "\nAll Borel Graphs of degree ",
+ StyleBox["d",
+  FontSlant->"Italic"],
+ " in ",
+ StyleBox["n",
+  FontSlant->"Italic"],
+ " variables"
+}], "Title",
+ CellChangeTimes->{{3.739705995909834*^9, 3.7397060303757153`*^9}, {
+  3.739724836540547*^9, 3.7397248454507236`*^9}, {3.739725075535871*^9, 
+  3.739725080625753*^9}, {3.739726804347465*^9, 3.739726810925664*^9}, {
+  3.739726908884879*^9, 3.73972691268781*^9}, {3.739731834972293*^9, 
+  3.7397318401528807`*^9}, {3.739731882073559*^9, 3.739731885948769*^9}, {
+  3.7397319167514677`*^9, 
+  3.73973194840379*^9}},ExpressionUUID->"eb32b0ce-62e2-47ba-91ab-\
+4b2c98fb321b"],
+
+Cell["\<\
+
+In this notebook you can get all the Borel Graphs of d degree and n variables\
+\
+\>", "Text",
+ CellChangeTimes->{{3.739731848742991*^9, 
+  3.739731867884954*^9}},ExpressionUUID->"5808ba8b-6274-4f5c-9f1d-\
+675995d87574"],
+
+Cell[TextData[StyleBox["First, fetch the Borel matrix for the nth variable ^ \
+d. For example, if you want all the Borel graphs of monomials of degree 4 in \
+3 variables, you should fetch the Borel matrix for c^4, since c is the third \
+variable and the desired degree is 4. \n\nNote that when you declare the \
+ring, declare it only up to the maximum variable. For example, if you want 3 \
+variables, declare the ring S = QQ[a,b,c]; don't declare something like S = \
+QQ[a,b,c,d]  ",
+ FontFamily->"Helvetica Neue",
+ FontWeight->"Regular"]], "Text",
+ CellChangeTimes->{{3.739724860125717*^9, 3.739724867558547*^9}, {
+  3.739725071665814*^9, 3.7397253311669292`*^9}, {3.739726820700663*^9, 
+  3.739726827480556*^9}, {3.73972688703273*^9, 
+  3.73972690465888*^9}},ExpressionUUID->"3ea42215-1b62-4a99-9cc0-\
+2db9999b4299"],
+
+Cell[BoxData[
+ RowBox[{"MainMat", " ", "=", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Enter", " ", "the", " ", "matrix", " ", 
+    RowBox[{"here", "!"}]}], " ", "*)"}]}]], "Input",
+ CellChangeTimes->{{3.739706102445209*^9, 3.739706117864201*^9}, {
+   3.739712063078721*^9, 3.739712081003614*^9}, {3.73972484936793*^9, 
+   3.739724852935728*^9}, {3.739725335783177*^9, 3.739725394090465*^9}, {
+   3.739725955173662*^9, 3.739725961549944*^9}, {3.739726835539536*^9, 
+   3.7397268518788*^9}, {3.739726960214323*^9, 3.739726966948154*^9}, {
+   3.739727444011408*^9, 3.739727452282194*^9}, {3.739727577033272*^9, 
+   3.739727585723228*^9}, {3.739727780969821*^9, 3.7397277952784863`*^9}, {
+   3.739727904068224*^9, 3.739727931505823*^9}, {3.7397294867775993`*^9, 
+   3.739729494570277*^9}, {3.739731443081071*^9, 3.739731482596366*^9}, 
+   3.739731515240965*^9, {3.7397319041195927`*^9, 
+   3.7397319104520693`*^9}},ExpressionUUID->"6d94063c-4066-4ac0-bf3f-\
+8c8596f453e5"],
+
+Cell["Now run the following code:", "Text",
+ CellChangeTimes->{{3.739726841356938*^9, 3.739726882411162*^9}, {
+  3.739727328988575*^9, 
+  3.73972733120891*^9}},ExpressionUUID->"8e94811b-eb15-4514-809f-\
+370980c7fb58"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"BorelGraph", "[", "K_", "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"R", "=", 
+         RowBox[{"Transpose", "[", "K", "]"}]}], ",", 
+        RowBox[{"M", " ", "=", " ", 
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Dimensions", "[", "K", "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], ",", 
+             RowBox[{
+              RowBox[{"Dimensions", "[", "K", "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}]}], "}"}]}], "]"}]}], ",", 
+        "mon"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", " ", "=", " ", "0"}], ",", " ", 
+         RowBox[{"i", "<", " ", 
+          RowBox[{
+           RowBox[{"Dimensions", "[", "R", "]"}], "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}], ",", " ", 
+         RowBox[{
+          RowBox[{"i", "++"}], "\[IndentingNewLine]", 
+          RowBox[{"For", "[", 
+           RowBox[{
+            RowBox[{"j", "=", "0"}], ",", 
+            RowBox[{"j", "<", 
+             RowBox[{
+              RowBox[{"Dimensions", "[", "R", "]"}], "[", 
+              RowBox[{"[", "1", "]"}], "]"}]}], ",", " ", 
+            RowBox[{
+             RowBox[{"j", "++"}], " ", "\[IndentingNewLine]", 
+             "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 SuperscriptBox[
+                  RowBox[{"(", 
+                   RowBox[{"EuclideanDistance", "[", 
+                    RowBox[{
+                    RowBox[{"R", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", ",", "All"}], "]"}], "]"}], ",", 
+                    RowBox[{"R", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"j", ",", "All"}], "]"}], "]"}]}], "]"}], ")"}], 
+                  "2"], " ", "\[Equal]", " ", "2"}], " ", "&&", " ", 
+                RowBox[{
+                 RowBox[{"SelectFirst", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"R", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", ",", "All"}], "]"}], "]"}], "-", 
+                    RowBox[{"R", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"j", ",", "All"}], "]"}], "]"}]}], ",", 
+                   RowBox[{
+                    RowBox[{"#", "!=", "0"}], "&"}]}], "]"}], " ", "\[Equal]",
+                  " ", 
+                 RowBox[{"-", "1"}]}]}], ",", " ", 
+               RowBox[{
+                RowBox[{"M", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"i", ",", "j"}], "]"}], "]"}], "=", "1"}], ",", 
+               RowBox[{
+                RowBox[{"M", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"i", ",", "j"}], "]"}], "]"}], "=", "0"}]}], 
+              "]"}]}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+           "]"}]}]}], "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+       "M"}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"BorMats", " ", "=", " ", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Transpose", "[", "MainMat", "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{"1", ";;", "i"}], ",", "All"}], "]"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "\[GreaterEqual]", " ", 
+          RowBox[{
+           RowBox[{"Transpose", "[", "MainMat", "]"}], "[", 
+           RowBox[{"[", 
+            RowBox[{"i", ",", "1"}], "]"}], "]"}]}], "&"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "1", ",", 
+        RowBox[{
+         RowBox[{"Dimensions", "[", "MainMat", "]"}], "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], "}"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"BorMats", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Transpose", "[", "#", "]"}], "&"}], "/@", "BorMats"}]}], ";"}],
+   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"AdMats", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"BorelGraph", "[", "#", "]"}], "&"}], "/@", "BorMats"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"AdMats", " ", "=", " ", 
+    RowBox[{"%", "/.", 
+     RowBox[{"Null", "\[Rule]", " ", "1"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"BorList", " ", "=", " ", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"FromCoefficientRules", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Transpose", "[", 
+              RowBox[{"BorMats", "[", 
+               RowBox[{"[", "j", "]"}], "]"}], "]"}], "[", 
+             RowBox[{"[", 
+              RowBox[{"i", ",", "All"}], "]"}], "]"}], "\[Rule]", "1"}], 
+           "}"}], ",", " ", 
+          RowBox[{
+           RowBox[{"Alphabet", "[", "]"}], "[", 
+           RowBox[{"[", 
+            RowBox[{"1", ";;", " ", 
+             RowBox[{
+              RowBox[{"Dimensions", "[", 
+               RowBox[{"Transpose", "[", 
+                RowBox[{"BorMats", "[", 
+                 RowBox[{"[", "j", "]"}], "]"}], "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}]}], " ", "]"}], "]"}]}], "]"}], 
+        ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "1", ",", 
+          RowBox[{
+           RowBox[{"Dimensions", "[", 
+            RowBox[{"Transpose", "[", 
+             RowBox[{"BorMats", "[", 
+              RowBox[{"[", "j", "]"}], "]"}], "]"}], "]"}], "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j", ",", "1", ",", 
+        RowBox[{
+         RowBox[{"Dimensions", "[", "BorMats", "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"options", "=", 
+    RowBox[{"Sequence", "[", 
+     RowBox[{
+      RowBox[{"VertexLabelStyle", "\[Rule]", 
+       RowBox[{"Directive", "[", 
+        RowBox[{"20", ",", 
+         RowBox[{"FontFamily", "\[Rule]", " ", "\"\<Helvetica\>\""}]}], 
+        "]"}]}], ",", 
+      RowBox[{"GraphLayout", "\[Rule]", "\"\<SpringElectricalEmbedding\>\""}],
+       ",", 
+      RowBox[{"ImageSize", "\[Rule]", "500"}], ",", 
+      RowBox[{"EdgeStyle", "\[Rule]", "Blue"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AlltheBorels", " ", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"AdjacencyGraph", "[", 
+      RowBox[{
+       RowBox[{"AdMats", "[", 
+        RowBox[{"[", "#", "]"}], "]"}], ",", 
+       RowBox[{"DirectedEdges", "\[Rule]", "True"}], ",", " ", 
+       RowBox[{"VertexLabels", "\[Rule]", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"i", "\[Rule]", " ", 
+           RowBox[{
+            RowBox[{"BorList", "[", 
+             RowBox[{"[", "#", "]"}], "]"}], "[", 
+            RowBox[{"[", "i", "]"}], "]"}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "1", ",", 
+            RowBox[{
+             RowBox[{"Dimensions", "[", 
+              RowBox[{"BorList", "[", 
+               RowBox[{"[", "#", "]"}], "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], "]"}]}], ",", 
+       "options", ",", " ", 
+       RowBox[{"VertexStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"1", "\[Rule]", " ", "Blue"}], " ", ",", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Dimensions", "[", 
+             RowBox[{"BorList", "[", 
+              RowBox[{"[", "#", "]"}], "]"}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "\[Rule]", " ", "Red"}]}], 
+         "}"}]}], ",", 
+       RowBox[{"VertexSize", "\[Rule]", "Automatic"}]}], "]"}], "&"}], "/@", 
+    RowBox[{"Range", "[", 
+     RowBox[{
+      RowBox[{"Dimensions", "[", "AdMats", "]"}], "[", 
+      RowBox[{"[", "1", "]"}], "]"}], "]"}]}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.739727001804575*^9, 3.739727063118916*^9}, 
+   3.739727322842084*^9},ExpressionUUID->"d5226c48-5a91-4b97-b61b-\
+68e9a811487e"],
+
+Cell["\<\
+
+If you ran all the preceding code, your Borel graphs are ready. You have two \
+options. Either you can view them here or you can export them to your working \
+directory 
+
+To view the graphs here, run the code on the next line.  \
+\>", "Text",
+ CellChangeTimes->{{3.739722882578109*^9, 3.739722915036006*^9}, {
+  3.739722956764799*^9, 3.739722979387619*^9}, {3.739723063312889*^9, 
+  3.7397230788935127`*^9}, {3.739725409535755*^9, 3.739725555283098*^9}, {
+  3.739725897128293*^9, 3.739725901038208*^9}, {3.7397259809375877`*^9, 
+  3.739725984768957*^9}, {3.7397266781737347`*^9, 3.7397266812108803`*^9}, {
+  3.73972706939764*^9, 3.7397271357108717`*^9}, {3.739727168465513*^9, 
+  3.7397271885482473`*^9}, {3.739729527279829*^9, 
+  3.739729540696006*^9}},ExpressionUUID->"0177dc4f-b370-4dba-831f-\
+b43a7d7578c9"],
+
+Cell[BoxData[
+ RowBox[{"AlltheBorels", "  "}]], "Input",
+ CellChangeTimes->{{3.739727120776017*^9, 3.7397271207775087`*^9}, {
+  3.739727345166381*^9, 
+  3.73972734933149*^9}},ExpressionUUID->"b76d512e-f624-43e7-8932-\
+b111b4b96927"],
+
+Cell["\<\
+To export them to your directory, run the following code instead. To view \
+your directory, you can use the Directory[] function. To set your directory, \
+you can use the SetDirectory[] function. \
+\>", "Text",
+ CellChangeTimes->{{3.739727143146715*^9, 3.739727153924919*^9}, {
+   3.739727191519026*^9, 3.7397272324650717`*^9}, 
+   3.739729547726035*^9},ExpressionUUID->"8996a7f7-de80-494f-85dc-\
+bece5b4801a7"],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"SetDirectory", "[", 
+    RowBox[{"(*", " ", 
+     RowBox[{"Put", " ", "the", " ", "directory", " ", "path", " ", "here"}], 
+     " ", "*)"}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"Table", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Export", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"ToString", "[", 
+         RowBox[{"InputForm", "[", 
+          RowBox[{"Last", "[", 
+           RowBox[{"BorList", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "]"}], "]"}], "]"}], "<>", 
+        "\"\<.png\>\""}], ",", 
+       RowBox[{"AlltheBorels", "[", 
+        RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", 
+       RowBox[{
+        RowBox[{"Dimensions", "[", "BorList", "]"}], "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]", 
+    "]"}], " "}]}]], "Input",
+ CellChangeTimes->{{3.739724481411083*^9, 3.739724507947825*^9}, {
+   3.739725557559354*^9, 3.739725560940126*^9}, {3.7397265299179993`*^9, 
+   3.73972653359347*^9}, {3.73972716314802*^9, 3.739727165709002*^9}, {
+   3.739727288256723*^9, 3.739727310414139*^9}, {3.739727368324141*^9, 
+   3.739727371234179*^9}, {3.739728372259989*^9, 3.739728376571607*^9}, {
+   3.7397284630545692`*^9, 3.7397284653601303`*^9}, {3.739728535139827*^9, 
+   3.739728535208138*^9}, {3.739728574860464*^9, 3.739728589684968*^9}, {
+   3.739728644093431*^9, 3.73972865927465*^9}, {3.73973139726613*^9, 
+   3.739731423499322*^9}, {3.739731496013405*^9, 3.739731506379695*^9}, 
+   3.739731590502684*^9, {3.7397318161630898`*^9, 
+   3.7397318292231483`*^9}},ExpressionUUID->"4089f381-a93c-48ad-9c0c-\
+f68b8d35abfa"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.739728316701653*^9, 
+  3.739728320861198*^9}},ExpressionUUID->"974e7581-47be-4e84-bea0-\
+c0dfb6d35736"]
+}, Open  ]]
+},
+WindowSize->{808, 675},
+WindowMargins->{{299, Automatic}, {Automatic, 9}},
+FrontEndVersion->"11.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (April 27, \
+2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 632, 16, 204, "Title", "ExpressionUUID" -> \
+"eb32b0ce-62e2-47ba-91ab-4b2c98fb321b"],
+Cell[1215, 40, 230, 7, 49, "Text", "ExpressionUUID" -> \
+"5808ba8b-6274-4f5c-9f1d-675995d87574"],
+Cell[1448, 49, 819, 13, 131, "Text", "ExpressionUUID" -> \
+"3ea42215-1b62-4a99-9cc0-2db9999b4299"],
+Cell[2270, 64, 961, 16, 32, "Input", "ExpressionUUID" -> \
+"6d94063c-4066-4ac0-bf3f-8c8596f453e5"],
+Cell[3234, 82, 217, 4, 30, "Text", "ExpressionUUID" -> \
+"8e94811b-eb15-4514-809f-370980c7fb58"],
+Cell[3454, 88, 8634, 231, 826, "Input", "ExpressionUUID" -> \
+"d5226c48-5a91-4b97-b61b-68e9a811487e"],
+Cell[12091, 321, 822, 16, 106, "Text", "ExpressionUUID" -> \
+"0177dc4f-b370-4dba-831f-b43a7d7578c9"],
+Cell[12916, 339, 232, 5, 32, "Input", "ExpressionUUID" -> \
+"b76d512e-f624-43e7-8932-b111b4b96927"],
+Cell[13151, 346, 421, 8, 49, "Text", "ExpressionUUID" -> \
+"8996a7f7-de80-494f-85dc-bece5b4801a7"],
+Cell[13575, 356, 1744, 37, 138, "Input", "ExpressionUUID" -> \
+"4089f381-a93c-48ad-9c0c-f68b8d35abfa"],
+Cell[15322, 395, 152, 3, 32, "Input", "ExpressionUUID" -> \
+"974e7581-47be-4e84-bea0-c0dfb6d35736"]
+}, Open  ]]
+}
+]
+*)
+
